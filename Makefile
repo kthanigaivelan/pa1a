@@ -1,6 +1,6 @@
 # Makefile                                                                                                                                                                        
 
-CXX_FLAG = --std=c++11 -g
+CXX_FLAG = --std=c++11 -ggdb
 
 all: project1
 

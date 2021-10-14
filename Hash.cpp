@@ -4,7 +4,7 @@
 #include <vector> 
 #include  "Hash.h"
 #include <math.h> 
-
+#include <stdio.h>
 #include "Hashbucket.h"
 
 using namespace std; 
@@ -81,4 +81,17 @@ int Hash::hornerVal(string x){
       temp %= p; 
     }
     return (int)temp;
+}
+
+int Hash::input(){
+  return size;
+}
+
+Hash::~Hash(){
+
+}
+
+
+int main(int argc,char *argv[]){
+  Hash h(argc,argv);
 }
