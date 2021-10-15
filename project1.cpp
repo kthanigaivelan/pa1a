@@ -11,6 +11,7 @@ int main(int argc, char *argv[]){
 
   file.open(argv[1]);
   getline(file, word);
+  
   long p = stoll(word);
   getline(file, word);
   long C = stoll(word);

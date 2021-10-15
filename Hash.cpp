@@ -23,12 +23,32 @@ Hash::Hash(long p,long C,int argc,char *argv[]){
   //for(long i=0; i<p; i++){
   //h[i] = new Hashbucket();
   //}
+
+  //file.open(argv[2]);
+  
+  //size = fseek (file,0,SEEK_END);
+  //cout << size << endl;
+  //file.close();
+    ifstream in(argv[2]);
+  if(in.is_open()){
+    in.seekg(0,ios::end);
+    size_t size = in.tellg();
+    if(size == 0){
+      cout << "empty" << endl;
+    }
+    }
+
+  /*ifstream file2(argv[2]);
+  if(is_empty(file2)){
+    cout << "empty" << endl;
+    }*/
   
   file.open(argv[2]);
   while(getline(file,word)){
     size++;
     long long key = hornerVal(word);
     h[key].increment();
+  
   }
   file.close();
 
@@ -81,6 +101,10 @@ long Hash::primaryArraySize(){
 
 long Hash::numCollisions(){
   long maxIdx = maxIndex();
+  if(maxIdx == -1){
+    return 0;
+  }
+
   return (h[maxIdx].getSize()) - 1;
 }
 
