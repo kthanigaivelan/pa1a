@@ -1,99 +1,123 @@
+#include "Hash.h"
 #include <string>
-#include <iostream> 
+#include <iostream>
 #include <fstream>
-#include <vector> 
-#include  "Hash.h"
-#include <math.h> 
-#include <stdio.h>
 #include "Hashbucket.h"
 
-using namespace std; 
+using namespace std;
 
-  Hash::Hash(int argc, char *argv[]){
-    string line;
-    ifstream fileRead;
-    fileRead.open(argv[1]);
-    getline(fileRead, line);
-    string pString = line;
-    getline(fileRead, line);
-    string CString = line;
-    fileRead.close();
-    this->p = stoll(pString);
-    //this->p = 11;
-    this->C = stoll(CString);
-    //count for size 
-    size = 0; 
-    fileRead.open(argv[2]);
-    while ( getline(fileRead,line) ){
-      size++; 
-    }
-    fileRead.close(); 
+Hash::Hash(int argc, char *argv[]){
+  ifstream file;
+  string word;
 
-    table = new Hashbucket[p]();
-    
-    //first pass
-    
-    fileRead.open(argv[2]);
-    while ( getline(fileRead,line) ){
-      int val = hornerVal(line);
-      int key = val % p;
+  file.open(argv[1]);
+  getline(file, word);
+  p = stoll(word);
+  getline(file, word);
+  C = stoll(word);
+  file.close();
 
-      cout << "incrementing hashbucket " << key << endl;
-      table[key].increment();
-    }
-    fileRead.close();
-    cout << "-----done with incrementing, moving on to insert" << endl;
-    
-    //second pass
-    
-    fileRead.open(argv[2]);
-    while(getline(fileRead,line)){
-      int val = hornerVal(line);
-      int key = val % p;
-      bool alreadyExists = false;
-      if(table[key].getSize() > 0){
-	cout << "trying array" << endl;
-	int arrSize = table[key].getSize();
-	string * arr = table[key].getWords();
-	cout << "passing" << endl;
-	for(int i = 0; i < arrSize; i++){
-	  if(arr[i].compare(line) == 0){
-	    alreadyExists = true;
-	    cout << "el already exists" << endl;
-	  }
-	}
-	
-      }
-      if(alreadyExists){
-	table[key].decrement();
-      }
-      else{
-	table[key].addElement(line);
-      }
-    }
-    
+  //h = new Hashbucket[p];
+  for(long i=0; i<p; i++){
+    h[i] = new Hashbucket();
   }
+  
+  file.open(argv[2]);
+  while(getline(file,word)){
+    size++;
+    long long key = hornerVal(word);
+    h[key]->increment();
+  }
+  file.close();
 
-int Hash::hornerVal(string x){
-   long long key = 0;
-   long long temp = 0;
-    for(int i = x.length()-1; i >= 0; i--){
-      temp += x[i];
-      temp *= C;
-      temp %= p; 
+  file.open(argv[2]);
+  while(getline(file,word)){
+    long long key = hornerVal(word);
+    bool exists = h[key]->alreadyExists(word);
+    if(!exists){
+      h[key]->addElement(word);
     }
-    return (int)temp;
-}
-
-int Hash::input(){
-  return size;
+    else{
+      h[key]->decrement();
+    }
+  }
 }
 
 Hash::~Hash(){
+  for(long i=0; i<size; i++){
+    delete h[i];
+  }
+  delete [] h;
+}
 
+long long Hash::hornerVal(string word){
+  long long val = 0;
+  for(long i=word.length() - 1; i> 0; i--){
+    val = val + int(word.at(i));
+    val = val * C;
+    val = val % p;
+  }
+  return val;
+}
+
+long Hash::inputSize(){
+  return size;
+}
+
+long Hash::numInserted(){
+  long inserted = 0;
+  for(long i=0; i < p; i++){
+    inserted = inserted + h[i]->getSize();
+  }
+  return inserted;
+}
+
+long Hash::primaryArraySize(){
+  return p;
+}
+
+long Hash::numCollisions(){
+  long maxIdx = maxIndex();
+  return (h[maxIdx]->getSize()) - 1;
+}
+
+long Hash::maxIndex(){
+  long maxNumWords = 0;
+  long maxIdx = -1;
+  for(long i=0; i <p; i++){
+    if(h[i]->getSize() > maxNumWords){
+      maxNumWords = h[i]->getSize();
+      maxIdx = i;
+    }
+  }
+  return maxIdx;
+}
+
+void Hash::maxWords(){
+  long maxIdx = maxIndex();
+  string * tmp = h[maxIdx]->getWords();
+  for(long i=0; i<(h[maxIdx]->getSize()); i++){
+    cout << tmp[i] << " ";
+  }
+  cout << endl;
+}
+
+void Hash::elements(){
+  for(long i =0; i<21; i++){
+    long count =0;
+    cout << "x=" << i << " : " << "b=";
+    for(long j=0; j<p; j++){
+      if(h[j]->getSize() == i){
+	count++;
+      }
+    }
+    cout << count << endl;
+    }
 }
 
 
-int main(int argc,char *argv[]){
-  Hash h(argc,argv);
+int main(int argc, char *argv[]){
+  Hash h1(argc,argv);
+  return 0;
 }
+

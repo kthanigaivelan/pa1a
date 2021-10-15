@@ -1,35 +1,48 @@
-
 #ifndef HASHBUCKET_H
 #define HASHBUCKET_H
-#include <vector> 
-#include <algorithm>
 #include <string>
 #include <iostream>
-#include <fstream>
 
-using namespace std; 
+using namespace std;
 
 class Hashbucket{
- public:
-  Hashbucket(){};
+public:
+  Hashbucket(){
+    size = 0;
+    idx = 0;
+  }
   void addElement(string word){
-    if(count == 0){
-      arr = new string[size]();
+    if(idx == 0){
+      words = new string[size];
+      words[idx] = word;
+      idx++;
     }
-    arr[count] = word;
-    count++;
-  };
-  void increment() {size++;}
-  void decrement() {size--;}
-  int getSize() {return size;}
-  int getCount() {return count;}
-  string *getWords() {return arr;}
+    else{
+      words[idx] = word;
+      idx++;
+    }
+  }
+  long getSize(){return size;}
+  string * getWords(){return words;}
+  void increment(){size++;}
+  void decrement(){size--;}
+  long getLastInserted(){return idx;}
+  bool alreadyExists(string word){
+    bool status = false;
+    if(idx != 0){
+      for(int i=0; i <idx; i++){
+	if(words[i].compare(word) == 0){
+	  status = true;
+	}
+      }
+    }
+    return status;
+  }
   
-  string *arr;
-
+  string * words;
+  
 private:
-  int size = 0;
-  int count = 0;
-  
+  long size = 0;
+  long idx = 0;
 };
 #endif

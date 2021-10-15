@@ -1,42 +1,26 @@
-// hash.h
-
 #ifndef HASH_H
 #define HASH_H
-#include <vector> 
-#include <algorithm>
-#include <string>
-#include <iostream>
-#include <fstream>
+
 #include "Hashbucket.h"
 
-using namespace std; 
-
-
-
 class Hash{
-
- public:
-  Hash(int argc, char *argv[]);
-  void insert1(char * argv[], int size);
-  void insert2(char* argv[]);
-  int hornerVal(string x);
-  int input(); 
-  int num_inserted(); 
-  int tablesize(); 
-  int collisions(); 
-  void elements(); 
-  int max(); 
-  void maxwords(); 
-
+public:
+  Hash(int argc,char *argv[]);
   ~Hash();
+  long long hornerVal(string word);
+  long inputSize();
+  long numInserted();
+  long primaryArraySize();
+  long numCollisions();
+  long maxIndex(); //helper for numCollisions
+  void maxWords();
+  void elements();
+  
 private:
-  int p;
-  int C;
-  int size;
-  int insertedwords = 0; 
-  Hashbucket * table;
- 
-  
-  
+  long long p;
+  long long C;
+  long size;
+  Hashbucket * h[];
 };
+
 #endif
