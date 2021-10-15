@@ -1,6 +1,6 @@
 # Makefile                                                                                                                                                                        
 
-CXX_FLAG = --std=c++11 -ggdb
+CXX_FLAG = --std=c++11 -ggdb -fPIE
 
 all: project1
 
