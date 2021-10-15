@@ -21,7 +21,6 @@ using namespace std;
     this->p = stoll(pString);
     //this->p = 11;
     this->C = stoll(CString);
-    
     //count for size 
     size = 0; 
     fileRead.open(argv[2]);
@@ -39,11 +38,11 @@ using namespace std;
       int val = hornerVal(line);
       int key = val % p;
 
-    
+      cout << "incrementing hashbucket " << key << endl;
       table[key].increment();
     }
     fileRead.close();
-
+    cout << "-----done with incrementing, moving on to insert" << endl;
     
     //second pass
     
@@ -53,11 +52,14 @@ using namespace std;
       int key = val % p;
       bool alreadyExists = false;
       if(table[key].getSize() > 0){
+	cout << "trying array" << endl;
 	int arrSize = table[key].getSize();
 	string * arr = table[key].getWords();
+	cout << "passing" << endl;
 	for(int i = 0; i < arrSize; i++){
 	  if(arr[i].compare(line) == 0){
 	    alreadyExists = true;
+	    cout << "el already exists" << endl;
 	  }
 	}
 	
