@@ -16,12 +16,14 @@ public:
   void maxWords();
   void elements();
   void query(string word);
+  bool empty;
   
 private:
   long long p;
   long long C;
   long size;
   Hashbucket * h;
+  //bool empty = false;
 };
 
 #endif

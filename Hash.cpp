@@ -7,6 +7,8 @@
 using namespace std;
 
 Hash::Hash(long p,long C,int argc,char *argv[]){
+  empty = false;
+  size = 0;
   ifstream file;
   string word;
   this->p = p;
@@ -33,16 +35,15 @@ Hash::Hash(long p,long C,int argc,char *argv[]){
   if(in.is_open()){
     in.seekg(0,ios::end);
     size_t size = in.tellg();
-    if(size == 0){
-      cout << "empty" << endl;
-    }
     }
 
   /*ifstream file2(argv[2]);
   if(is_empty(file2)){
     cout << "empty" << endl;
     }*/
-  
+  if(!size){
+    empty = true;
+  }
   file.open(argv[2]);
   while(getline(file,word)){
     size++;
@@ -63,6 +64,7 @@ Hash::Hash(long p,long C,int argc,char *argv[]){
       h[key].decrement();
     }
   }
+
 };
 
 Hash::~Hash(){
@@ -84,10 +86,16 @@ long long Hash::hornerVal(string word){
 }
 
 long Hash::inputSize(){
+  if(empty){
+    return 0;
+  }
   return size;
 }
 
 long Hash::numInserted(){
+  if(empty){
+    return 0;
+  }
   long inserted = 0;
   for(long i=0; i < p; i++){
     inserted = inserted + h[i].getSize();
@@ -137,6 +145,12 @@ void Hash::elements(){
       if(h[j].getSize() == i){
 	count++;
       }
+    }
+    if(i == 0 && empty){
+      count++;
+    }
+    if(i == 1 && empty){
+      count--;
     }
     cout << count << endl;
     }
