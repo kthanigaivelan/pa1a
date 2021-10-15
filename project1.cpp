@@ -34,9 +34,9 @@ int main(int argc, char *argv[]){
   cout << "Number of words in table: " << h1.numInserted() << endl;
   cout << "Primary array size: " << h1.primaryArraySize() << endl;
   cout << "Maximum number of collisions in a hashbucket: " << h1.numCollisions() << endl;;
-  cout << "The number of hashbuckets b with x elements: " << endl;
+  cout << "The number of hashbuckets b with x elements:" << endl;
   h1.elements();
-  cout << endl;
+  //cout << endl;
   cout << "Keys in most populated bucket: ";
   h1.maxWords();
   cout << endl;
