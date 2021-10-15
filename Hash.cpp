@@ -6,18 +6,19 @@
 
 using namespace std;
 
-Hash::Hash(int argc, char *argv[]){
+Hash::Hash(long p,long C,int argc,char *argv[]){
   ifstream file;
   string word;
 
-  file.open(argv[1]);
+  /*  file.open(argv[1]);
   getline(file, word);
   p = stoll(word);
   getline(file, word);
   C = stoll(word);
   file.close();
-
-  //h = new Hashbucket[p];
+  */
+  h = new Hashbucket[p]();
+  //h = (Hashbucket*)malloc(p+1);
   for(long i=0; i<p; i++){
     h[i] = new Hashbucket();
   }
@@ -41,13 +42,13 @@ Hash::Hash(int argc, char *argv[]){
       h[key]->decrement();
     }
   }
-}
+};
 
 Hash::~Hash(){
   for(long i=0; i<size; i++){
     delete h[i];
   }
-  delete [] h;
+  //delete [] h;
 }
 
 long long Hash::hornerVal(string word){
@@ -116,8 +117,8 @@ void Hash::elements(){
 }
 
 
-int main(int argc, char *argv[]){
+/*int main(int argc, char *argv[]){
   Hash h1(argc,argv);
   return 0;
-}
+  }*/
 

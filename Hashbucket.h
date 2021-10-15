@@ -10,7 +10,7 @@ public:
   Hashbucket(){
     size = 0;
     idx = 0;
-  }
+  };
   void addElement(string word){
     if(idx == 0){
       words = new string[size];

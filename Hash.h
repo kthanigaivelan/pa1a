@@ -5,7 +5,7 @@
 
 class Hash{
 public:
-  Hash(int argc,char *argv[]);
+  Hash(long p,long C,int argc,char *argv[]);
   ~Hash();
   long long hornerVal(string word);
   long inputSize();
@@ -20,7 +20,7 @@ private:
   long long p;
   long long C;
   long size;
-  Hashbucket * h[];
+  Hashbucket * h;
 };
 
 #endif

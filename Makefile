@@ -4,6 +4,12 @@ CXX_FLAG = --std=c++11 -ggdb
 
 all: project1
 
+main: main.o Hash.o Hashbucket.o
+	g++ $(CXX_FLAG) main.o Hash.o Hashbucket.o
+
+main.o: main.cpp
+	g++ -c $(CXX_FLAG) main.cpp
+
 Hash: Hash.o Hashbucket.o
 	g++ $(CXX_FLAG) -o Hash Hash.o Hashbucket.o
 
