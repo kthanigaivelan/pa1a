@@ -41,6 +41,7 @@ int main(int argc, char *argv[]){
   h1.maxWords();
   cout << endl;
 
+  cout << "Queries" << endl;
   if(argc == 4){
     file.open(argv[3]);
       while(getline(file,word)){
