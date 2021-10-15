@@ -29,6 +29,25 @@ int main(int argc, char *argv[]){
   }
   file.close();
   */
-  Hash h1 = new Hash(p,C,argc,argv);
+  Hash h1(p,C,argc,argv);
+  cout << "Size of input: " << h1.inputSize() << endl;
+  cout << "Number of words in table: " << h1.numInserted() << endl;
+  cout << "Primary array size: " << h1.primaryArraySize() << endl;
+  cout << "Maximum number of collisions in a hashbucket: " << h1.numCollisions() << endl;;
+  cout << "The number of hashbuckets b with x elements: " << endl;
+  h1.elements();
+  cout << endl;
+  cout << "Keys in most populated bucket: ";
+  h1.maxWords();
+  cout << endl;
+
+  if(argc == 4){
+    file.open(argv[3]);
+      while(getline(file,word)){
+	h1.query(word);
+      }
+  }
   return 0;
+
+
 }

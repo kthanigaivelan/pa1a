@@ -38,7 +38,14 @@ public:
     }
     return status;
   }
-  
+  long existsAt(string word){
+    for(int i=0; i<idx; i++){
+      if(words[i].compare(word) == 0){
+	return i;
+      }
+    }
+    return -1;
+  }
   string * words;
   
 private:

@@ -15,6 +15,7 @@ public:
   long maxIndex(); //helper for numCollisions
   void maxWords();
   void elements();
+  void query(string word);
   
 private:
   long long p;
